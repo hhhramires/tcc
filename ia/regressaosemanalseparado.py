@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Carregando os dados
-train_df = pd.read_csv('train.csv', sep=';')
-test_df = pd.read_csv('test.csv', sep=';')
+train_df = pd.read_csv('dataset/separado/train.csv', sep=';')
+test_df = pd.read_csv('dataset/separado/test.csv', sep=';')
 
 # Separando as features (X) e o target (y)
 X_train = train_df[['week_of_month', 'month']]
