@@ -4,22 +4,23 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
-# Preparação dos dados
-df = pd.DataFrame({
-    'week_month': ['102', '203', '304', '401', '502', '103', '204', '305', '402', '503'],
-    'value': [100, 200, 150, 300, 250, 120, 210, 160, 310, 260]
-})
-df['week'] = df['week_month'].str[:1].astype(int)
-df['month'] = df['week_month'].str[1:].astype(int)
+# Carregando os dados de treino e teste
+train_df = pd.read_csv('dataset/separado/trein.csv', sep=';')
+test_df = pd.read_csv('dataset/separado/test.csv', sep=';')
 
-# Separando as features e o target
-X = df[['week', 'month']]
-y = df['value']
+# Separando as features e o target nos conjuntos de treino e teste
+X_train = train_df[['week_of_month', 'month']]
+y_train = train_df['value']
+
+X_test = test_df[['week_of_month', 'month']]
+y_test = test_df['value']
 
 # Normalizando os dados
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
 # Criando o modelo da rede neural
 model = Sequential()
@@ -31,26 +32,24 @@ model.add(Dense(1, activation='linear'))  # Camada de saída
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Treinando o modelo
-model.fit(X_scaled, y, epochs=100, verbose=1)
+model.fit(X_train_scaled, y_train, epochs=100, verbose=1)
 
-# Fazendo previsões no conjunto de dados original
-y_pred = model.predict(X_scaled)
+# Fazendo previsões no conjunto de teste
+y_pred = model.predict(X_test_scaled)
 
 # Avaliando o modelo
-mse = mean_squared_error(y, y_pred)
-print(f"Erro Quadrático Médio no conjunto de treino: {mse}")
+mse = mean_squared_error(y_test, y_pred)
+print(f"Erro Quadrático Médio no conjunto de teste: {mse}")
 
-# Fazendo uma previsão para a semana 1 de março (103)
-semana_futura = pd.DataFrame({'week': [1], 'month': [3]})
+# Fazendo uma previsão para uma semana e mês futuro
+semana_futura = pd.DataFrame({'week_of_month': [1], 'month': [3]})  # Exemplo de semana 1 de março
 semana_futura_scaled = scaler.transform(semana_futura)
 valor_previsto = model.predict(semana_futura_scaled)
 print(f"Valor previsto para a semana 1 de março: {valor_previsto[0][0]}")
 
-# Plotando o gráfico dos valores reais vs. previstos
-import matplotlib.pyplot as plt
-
+# Plotando o gráfico dos valores reais vs. previstos no conjunto de teste
 plt.figure(figsize=(10, 6))
-plt.plot(y, label='Valor Real', marker='o')
+plt.plot(y_test.values, label='Valor Real', marker='o')
 plt.plot(y_pred, label='Valor Previsto', marker='x')
 plt.title('Comparação entre Valor Real e Valor Previsto (Rede Neural)')
 plt.xlabel('Índice')
