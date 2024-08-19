@@ -14,7 +14,7 @@ def extract_years(filename: str):
     # Converter para inteiros e retornar como uma lista de números
     return [int(year) for year in years]
 
-modelo = 'Modelo de Séries Temporais Decision Tree Regressor'
+modelo = 'Modelo Ensemble - Stacking Regressor'
 arquivo_treino = 'train_2022_2023.csv'
 arquivo_teste = 'test_2024.csv'
 

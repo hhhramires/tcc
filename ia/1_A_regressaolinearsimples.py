@@ -4,9 +4,20 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+def extract_years(filename: str):
+    # Usar expressão regular para encontrar todos os números no nome do arquivo
+    years = re.findall(r'\d{4}', filename)
+
+    # Converter para inteiros e retornar como uma lista de números
+    return [int(year) for year in years]
+
+modelo = 'Modelo de Regressão Linear - Decision Tree Regressor'
+arquivo_treino = 'train_2022_2023.csv'
+arquivo_teste = 'test_2024.csv'
+
 # Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/separado/train.csv', sep=';')
-test_df = pd.read_csv('dataset/separado/test.csv', sep=';')
+train_df = pd.read_csv('dataset/separado/' + arquivo_treino, sep=';')
+test_df = pd.read_csv('dataset/separado/' + arquivo_teste, sep=';')
 
 # Separando as features (X) e o target (y)
 X_train = train_df[['week_of_month', 'month']]
