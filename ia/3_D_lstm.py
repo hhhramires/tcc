@@ -19,8 +19,8 @@ arquivo_treino = 'train_2021_2022.csv'
 arquivo_teste = 'test_2023.csv'
 
 # Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/separado/' + arquivo_treino, sep=';')
-test_df = pd.read_csv('dataset/separado/' + arquivo_teste, sep=';')
+train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
+test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
 # Combinar mês e semana para criar um índice temporal
 train_df['date'] = pd.to_datetime(train_df['month'].astype(str) + '-2021') + pd.to_timedelta((train_df['week_of_month'] - 1) * 7, unit='d')

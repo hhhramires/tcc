@@ -15,12 +15,12 @@ def extract_years(filename: str):
     return [int(year) for year in years]
 
 modelo = 'Modelo de Redes Neurais - Redes Neurais Convolucionais (CNN)'
-arquivo_treino = 'train_2022_2023.csv'
+arquivo_treino = 'test_2024.csv'
 arquivo_teste = 'test_2024.csv'
 
 # Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/separado/' + arquivo_treino, sep=';')
-test_df = pd.read_csv('dataset/separado/' + arquivo_teste, sep=';')
+train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
+test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
 # Separando as features (X) e o target (y)
 X_train = train_df[['week_of_month', 'month']].values

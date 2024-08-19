@@ -7,8 +7,8 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 # Carregando os dados
-train_df = pd.read_csv('dataset/separado/train.csv', sep=';')
-test_df = pd.read_csv('dataset/separado/test.csv', sep=';')
+train_df = pd.read_csv('dataset/real/train.csv', sep=';')
+test_df = pd.read_csv('dataset/real/test.csv', sep=';')
 
 # Separando as features e o target nos conjuntos de treino e teste
 X_train = train_df[['week_of_month', 'month']]

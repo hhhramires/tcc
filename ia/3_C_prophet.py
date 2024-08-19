@@ -16,8 +16,8 @@ arquivo_treino = 'train_2021_2022.csv'
 arquivo_teste = 'test_2023.csv'
 
 # Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/separado/' + arquivo_treino, sep=';')
-test_df = pd.read_csv('dataset/separado/' + arquivo_teste, sep=';')
+train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
+test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
 # Criando uma data sintética para cada período
 # Assumindo que cada período começa no início do mês e as semanas são incrementais
