@@ -6,8 +6,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
-# Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/separado/trein.csv', sep=';')
+# Carregando os dados
+train_df = pd.read_csv('dataset/separado/train.csv', sep=';')
 test_df = pd.read_csv('dataset/separado/test.csv', sep=';')
 
 # Separando as features e o target nos conjuntos de treino e teste
@@ -40,12 +40,6 @@ y_pred = model.predict(X_test_scaled)
 # Avaliando o modelo
 mse = mean_squared_error(y_test, y_pred)
 print(f"Erro Quadrático Médio no conjunto de teste: {mse}")
-
-# Fazendo uma previsão para uma semana e mês futuro
-semana_futura = pd.DataFrame({'week_of_month': [1], 'month': [3]})  # Exemplo de semana 1 de março
-semana_futura_scaled = scaler.transform(semana_futura)
-valor_previsto = model.predict(semana_futura_scaled)
-print(f"Valor previsto para a semana 1 de março: {valor_previsto[0][0]}")
 
 # Plotando o gráfico dos valores reais vs. previstos no conjunto de teste
 plt.figure(figsize=(10, 6))
