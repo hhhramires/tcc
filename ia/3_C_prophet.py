@@ -1,10 +1,55 @@
-import unittest
+import pandas as pd
+from fbprophet import Prophet
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import re
 
+def extract_years(filename: str):
+    # Usar expressão regular para encontrar todos os números no nome do arquivo
+    years = re.findall(r'\d{4}', filename)
 
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)  # add assertion here
+    # Converter para inteiros e retornar como uma lista de números
+    return [int(year) for year in years]
 
+modelo = 'Modelo de Séries Temporais Decision Tree Regressor'
+arquivo_treino = 'train_2021_2022.csv'
+arquivo_teste = 'test_2023.csv'
 
-if __name__ == '__main__':
-    unittest.main()
+# Carregando os dados de treino e teste
+train_df = pd.read_csv('dataset/separado/' + arquivo_treino, sep=';')
+test_df = pd.read_csv('dataset/separado/' + arquivo_teste, sep=';')
+
+# Criando uma data sintética para cada período
+# Assumindo que cada período começa no início do mês e as semanas são incrementais
+train_df['date'] = pd.to_datetime(train_df['month'].astype(str) + '-2021') + pd.to_timedelta((train_df['week_of_month'] - 1) * 7, unit='d')
+test_df['date'] = pd.to_datetime(test_df['month'].astype(str) + '-2023') + pd.to_timedelta((test_df['week_of_month'] - 1) * 7, unit='d')
+
+# Preparando os dados para o Prophet
+train_df = train_df.rename(columns={'date': 'ds', 'value': 'y'})
+test_df = test_df.rename(columns={'date': 'ds', 'value': 'y'})
+
+# Criando e treinando o modelo Prophet
+model = Prophet(yearly_seasonality=True, weekly_seasonality=False, daily_seasonality=False)
+model.fit(train_df)
+
+# Fazendo previsões para o ano de 2023
+future = test_df[['ds']]
+forecast = model.predict(future)
+
+# Extraindo as previsões
+y_pred = forecast['yhat']
+
+# Calculando o erro quadrático médio
+mse = mean_squared_error(test_df['y'], y_pred)
+print(f'Mean Squared Error: {mse}')
+
+# Plotando os resultados
+plt.figure(figsize=(10, 6))
+plt.plot(test_df['ds'], test_df['y'], label='Valores Reais 2023', marker='o')
+plt.plot(test_df['ds'], y_pred, label='Previsões 2023', marker='x')
+plt.title('Previsão de Gastos para 2023 - Prophet')
+plt.xlabel('Data')
+plt.ylabel('Valor')
+plt.legend()
+plt.grid(True)
+plt.show()
