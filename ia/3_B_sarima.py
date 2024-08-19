@@ -1,9 +1,10 @@
-import pandas as pd
-import numpy as np
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
 import re
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.metrics import mean_squared_error
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
 
 def extract_years(filename: str):
     # Usar expressão regular para encontrar todos os números no nome do arquivo
@@ -12,18 +13,18 @@ def extract_years(filename: str):
     # Converter para inteiros e retornar como uma lista de números
     return [int(year) for year in years]
 
+
 modelo = 'Modelo de Séries Temporais - SARIMA (Seasonal ARIMA)'
-arquivo_treino = 'train_2021_2022.csv'
-arquivo_teste = 'test_2023.csv'
+arquivo_treino = 'train_data_valor_2021_2022.csv'
+arquivo_teste = 'test_data_valor_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
 test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
-
 # Criando uma coluna 'period' que representa a combinação de mês e semana como um único índice
-train_df['period'] = train_df['month'].astype(str) + '-' + train_df['week_of_month'].astype(str)
-test_df['period'] = test_df['month'].astype(str) + '-' + test_df['week_of_month'].astype(str)
+train_df['period'] = train_df['date']
+test_df['period'] = test_df['date']
 
 # Usando essa coluna como índice da série temporal
 train_df.set_index('period', inplace=True)
@@ -50,7 +51,8 @@ print(f'Mean Squared Error: {mse}')
 plt.figure(figsize=(10, 6))
 plt.plot(range(len(y_test)), y_test, label=f'Valores Reais {extract_years(arquivo_teste)}', marker='o')
 plt.plot(range(len(y_pred)), y_pred, label=f'Previsões {extract_years(arquivo_teste)}', marker='x')
-plt.title(f'Previsão de ENTRADAS para {extract_years(arquivo_teste)} - Treino {extract_years(arquivo_treino)} - {modelo}')
+plt.title(
+    f'Previsão de ENTRADAS para {extract_years(arquivo_teste)} - Treino {extract_years(arquivo_treino)} - {modelo}')
 plt.xlabel('Semana do Ano')
 plt.ylabel('Valor')
 plt.legend()

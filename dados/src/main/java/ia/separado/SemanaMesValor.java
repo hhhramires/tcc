@@ -1,4 +1,4 @@
-package org.example.separado;
+package ia.separado;
 
 import lombok.Builder;
 import lombok.Data;

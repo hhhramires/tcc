@@ -1,8 +1,10 @@
+import re
+
+import matplotlib.pyplot as plt
 import pandas as pd
 from fbprophet import Prophet
 from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
-import re
+
 
 def extract_years(filename: str):
     # Usar expressão regular para encontrar todos os números no nome do arquivo
@@ -11,9 +13,10 @@ def extract_years(filename: str):
     # Converter para inteiros e retornar como uma lista de números
     return [int(year) for year in years]
 
+
 modelo = 'Modelo de Séries Temporais - Prophet'
-arquivo_treino = 'train_2021_2022.csv'
-arquivo_teste = 'test_2023.csv'
+arquivo_treino = 'train_data_valor_2021_2022.csv'
+arquivo_teste = 'test_data_valor_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
@@ -21,8 +24,8 @@ test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
 # Criando uma data sintética para cada período
 # Assumindo que cada período começa no início do mês e as semanas são incrementais
-train_df['date'] = pd.to_datetime(train_df['month'].astype(str) + '-2021') + pd.to_timedelta((train_df['week_of_month'] - 1) * 7, unit='d')
-test_df['date'] = pd.to_datetime(test_df['month'].astype(str) + '-2023') + pd.to_timedelta((test_df['week_of_month'] - 1) * 7, unit='d')
+train_df['date'] = pd.to_datetime(train_df['month'])
+test_df['date'] = pd.to_datetime(test_df['month'])
 
 # Preparando os dados para o Prophet
 train_df = train_df.rename(columns={'date': 'ds', 'value': 'y'})

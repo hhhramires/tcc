@@ -1,4 +1,4 @@
-package org.example;
+package ia;
 
 import lombok.Builder;
 import lombok.Data;

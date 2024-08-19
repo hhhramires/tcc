@@ -1,9 +1,4 @@
-package org.example.separado;
-
-import org.example.CalculaSemanaMes;
-import org.example.File;
-import org.example.Linha;
-import org.example.SemanaMes;
+package ia;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -12,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MassaIASeparado {
+public class MassaIAJunto {
     public static void main(String[] args) {
         List<Linha> linhas = File.lerArquivo("gn");
         System.out.println("Total: " + linhas.size());
 
-        List<SemanaMesValor> semanaMesTreino = new ArrayList<>();
-        List<SemanaMesValor> semanaMesTeste = new ArrayList<>();
+        List<DataValor> semanaMesTreino = new ArrayList<>();
+        List<DataValor> semanaMesTeste = new ArrayList<>();
         mes(linhas, 1, semanaMesTreino, semanaMesTeste);
         mes(linhas, 2, semanaMesTreino, semanaMesTeste);
         mes(linhas, 3, semanaMesTreino, semanaMesTeste);
@@ -32,84 +27,70 @@ public class MassaIASeparado {
         mes(linhas, 11, semanaMesTreino, semanaMesTeste);
         mes(linhas, 12, semanaMesTreino, semanaMesTeste);
 
-        salvarLinha(semanaMesTreino, "train_2022_2023");
-        salvarLinha(semanaMesTeste, "test_2024");
-
-//        salvarLinha(semanaMesTreino, "train_2021_2022");
-//        salvarLinha(semanaMesTeste, "test_2023");
+        salvarLinha(semanaMesTreino, "train");
+        salvarLinha(semanaMesTreino, "test");
     }
 
-    public static void mes(List<Linha> linhas, int mes, List<SemanaMesValor> semanaMesTreino, List<SemanaMesValor> semanaMesTeste) {
+    public static void mes(List<Linha> linhas, int mes, List<DataValor> semanaMesTreino, List<DataValor> semanaMesTeste) {
         String mesString = String.valueOf(mes);
         if (mes < 10) {
             mesString = "0" + mes;
         }
 
+        // Filtro do ano
         List<Linha> l2021 = linhas
                 .stream()
                 .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2021 && linha.getData().getMonthValue() == mes))
                 .collect(Collectors.toList());
+        System.out.println("Total 2021: " + l2021.size());
 
         List<Linha> l2022 = linhas
                 .stream()
                 .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2022 && linha.getData().getMonthValue() == mes))
                 .collect(Collectors.toList());
+        System.out.println("Total 2022: " + l2022.size());
 
         List<Linha> l2023 = linhas
                 .stream()
                 .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2023 && linha.getData().getMonthValue() == mes))
                 .collect(Collectors.toList());
-
-        List<Linha> l2024 = linhas
-                .stream()
-                .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2024 && linha.getData().getMonthValue() == mes))
-                .collect(Collectors.toList());
+        System.out.println("Total 2023: " + l2023.size());
 
         List<SemanaMes> semanaMesEntrada2021 = CalculaSemanaMes.calculateEntradaDeDinheiroPorSemanaMes(l2021);
+        System.out.println("Total semanaMesEntrada2021: " + semanaMesEntrada2021.size());
         List<SemanaMes> semanaMesEntrada2022 = CalculaSemanaMes.calculateEntradaDeDinheiroPorSemanaMes(l2022);
+        System.out.println("Total semanaMesEntrada2022: " + semanaMesEntrada2022.size());
         List<SemanaMes> semanaMesEntrada2023 = CalculaSemanaMes.calculateEntradaDeDinheiroPorSemanaMes(l2023);
-        List<SemanaMes> semanaMesEntrada2024 = CalculaSemanaMes.calculateEntradaDeDinheiroPorSemanaMes(l2024);
-
+        System.out.println("Total semanaMesEntrada2023: " + semanaMesEntrada2023.size());
 
         for (int i = 0; i < 6; i++) {
-//            if (i < semanaMesEntrada2021.size()) {
-//                semanaMesTreino.add(
-//                        SemanaMesValor.builder()
-//                                .semana((i + 1))
-//                                .mes(mesString)
-//                                .valor(semanaMesEntrada2021.get(i).getValor())
-//                                .build());
-//            }
+            if (i < semanaMesEntrada2021.size()) {
+                semanaMesTreino.add(DataValor.builder()
+                        .data((i + 1) + mesString)
+                        .valor(semanaMesEntrada2021.get(i).getValor())
+                        .build());
+            }
             if (i < semanaMesEntrada2022.size()) {
-                semanaMesTreino.add(
-                        SemanaMesValor.builder()
-                                .semana((i + 1))
-                                .mes(mesString)
-                                .valor(semanaMesEntrada2022.get(i).getValor())
-                                .build());
+//                semanaMesTreino.add(DataValor.builder()
+//                        .data((i + 1) + mesString)
+//                        .valor(semanaMesEntrada2022.get(i).getValor())
+//                        .build());
             }
             if (i < semanaMesEntrada2023.size()) {
-                semanaMesTreino.add(
-                        SemanaMesValor.builder()
-                                .semana((i + 1))
-                                .mes(mesString)
-                                .valor(semanaMesEntrada2023.get(i).getValor())
-                                .build());
-            }
-            if (i < semanaMesEntrada2024.size()) {
-                semanaMesTeste.add(
-                        SemanaMesValor.builder()
-                                .semana((i + 1))
-                                .mes(mesString)
-                                .valor(semanaMesEntrada2024.get(i).getValor())
-                                .build());
+                semanaMesTeste.add(DataValor.builder()
+                        .data((i + 1) + mesString)
+                        .valor(semanaMesEntrada2023.get(i).getValor())
+                        .build());
             }
         }
 
         // Saidas
         List<SemanaMes> semanaMesSaida2021 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2021);
+        System.out.println("Total semanaMesSaida2021: " + semanaMesSaida2021.size());
         List<SemanaMes> semanaMesSaida2022 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2022);
+        System.out.println("Total semanaMesSaida2022: " + semanaMesSaida2022.size());
         List<SemanaMes> semanaMesSaida2023 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2023);
+        System.out.println("Total semanaMesSaida2023: " + semanaMesSaida2023.size());
 
         for (int i = 0; i < 6; i++) {
             if (i < semanaMesSaida2021.size()) {
@@ -125,15 +106,15 @@ public class MassaIASeparado {
         }
     }
 
-    public static void salvarLinha(List<SemanaMesValor> linhas, String fileName) {
-        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\tcc\\ia\\dataset\\separado\\" + fileName + ".csv";
+    public static void salvarLinha(List<DataValor> linhas, String fileName) {
+        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\Tudo TCC II\\iapronta\\" + fileName + ".csv";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("week_of_month;month;value");
+            writer.write("week_of_month;value");
             writer.newLine();
 
-            for (SemanaMesValor movimento_diario : linhas) {
-                writer.write(movimento_diario.getSemana() + ";" + movimento_diario.getMes() + ";" + movimento_diario.getValor().toBigInteger());
+            for (DataValor movimento_diario : linhas) {
+                writer.write(movimento_diario.getData() + ";" + movimento_diario.getValor().toBigInteger());
                 writer.newLine();
             }
         } catch (IOException e) {

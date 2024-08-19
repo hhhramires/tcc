@@ -1,4 +1,4 @@
-package org.example;
+package ia;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,9 +7,10 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-public class DataValor {
+public class SemanaMes {
 
-    private String data;
+    private Integer semana;
+    private Integer mes;
     private BigDecimal valor;
 
 }
