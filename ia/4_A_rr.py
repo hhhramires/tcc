@@ -13,8 +13,8 @@ def extract_years(filename: str):
     return [int(year) for year in years]
 
 modelo = 'Modelo de Regressão Regularizados - Ridge Regression'
-arquivo_treino = 'test_2024.csv'
-arquivo_teste = 'test_2024.csv'
+arquivo_treino = 'train_2021_2022.csv'
+arquivo_teste = 'test_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')

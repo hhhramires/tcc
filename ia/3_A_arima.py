@@ -14,27 +14,21 @@ def extract_years(filename: str):
     return [int(year) for year in years]
 
 
-modelo = 'Modelo Baseados em Árvores de Decisão - Decision Tree Regressor'
-# arquivo_treino = 'train_2021_2022.csv'
-# arquivo_teste = 'test_2023.csv'
+modelo = 'Modelo de Séries Temporais - ARIMA (AutoRegressive Integrated Moving Average)'
+arquivo_treino = 'train_data_valor_2021_2022.csv'
+arquivo_teste = 'test_data_valor_2023.csv'
 
-arquivo_treino = 'train_2022_2023.csv'
-arquivo_teste = 'test_2024.csv'
+# arquivo_treino = 'train_data_valor_2021_2022.csv'
+# arquivo_teste = 'test_data_valor_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
 test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
-# Criando uma data sintética para cada período
-# Assumindo que cada período começa no início do mês e as semanas são incrementais
-train_df['date'] = (
-        pd.to_datetime(train_df['month'].astype(str) + '-2021') + pd.to_timedelta((train_df['week_of_month'] - 1) * 7,
-                                                                                  unit='d'))
-test_df['date'] = (
-        pd.to_datetime(test_df['month'].astype(str) + '-2023') + pd.to_timedelta((test_df['week_of_month'] - 1) * 7,
-                                                                                 unit='d'))
+# Convertendo a coluna 'date' para datetime e definindo como índice
+train_df['date'] = pd.to_datetime(train_df['date'])
+test_df['date'] = pd.to_datetime(test_df['date'])
 
-# Configurar o índice de data
 train_df.set_index('date', inplace=True)
 test_df.set_index('date', inplace=True)
 
@@ -48,19 +42,23 @@ y_test = test_df['value']
 model = ARIMA(y_train, order=(1, 1, 1))
 arima_model = model.fit()
 
-# Fazendo previsões para 2023
-y_pred = arima_model.predict(start=y_test.index[0], end=y_test.index[-1], typ='levels')
+# Fazendo previsões para o período do dataset de teste
+#y_pred = arima_model.predict(start=y_test.index[0], end=y_test.index[-1], typ='levels')
+
+# Usando índices inteiros para prever o mesmo número de períodos do conjunto de teste
+y_pred = arima_model.predict(start=len(y_train), end=len(y_train) + len(y_test) - 1)
 
 # Calculando o erro quadrático médio
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
 
 # Plotando os resultados
-plt.figure(figsize=(10, 6))
-plt.plot(y_test.index, y_test, label='Valores Reais 2023', marker='o')
-plt.plot(y_pred.index, y_pred, label='Previsões 2023', marker='x')
-plt.title('Previsão de Gastos para 2023 - ARIMA')
-plt.xlabel('Data')
+plt.figure(figsize=(12, 6))
+plt.plot(range(len(y_test)), y_test, label=f'Valores Reais {extract_years(arquivo_teste)}', marker='o')
+plt.plot(range(len(y_pred)), y_pred, label=f'Previsões {extract_years(arquivo_teste)}', marker='x')
+plt.title(
+    f'Previsão de ENTRADAS para {extract_years(arquivo_teste)} - Treino {extract_years(arquivo_treino)} - {modelo}')
+plt.xlabel('Semana do Ano')
 plt.ylabel('Valor')
 plt.legend()
 plt.grid(True)

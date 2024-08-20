@@ -22,35 +22,31 @@ arquivo_teste = 'test_data_valor_2023.csv'
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
 test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
 
-# Criando uma data sintética para cada período
-# Assumindo que cada período começa no início do mês e as semanas são incrementais
-train_df['date'] = pd.to_datetime(train_df['month'])
-test_df['date'] = pd.to_datetime(test_df['month'])
+# Renomeando as colunas para o formato esperado pelo Prophet
+train_df.rename(columns={'date': 'ds', 'value': 'y'}, inplace=True)
+test_df.rename(columns={'date': 'ds', 'value': 'y'}, inplace=True)
 
-# Preparando os dados para o Prophet
-train_df = train_df.rename(columns={'date': 'ds', 'value': 'y'})
-test_df = test_df.rename(columns={'date': 'ds', 'value': 'y'})
+# Convertendo a coluna 'ds' para datetime
+train_df['ds'] = pd.to_datetime(train_df['ds'])
+test_df['ds'] = pd.to_datetime(test_df['ds'])
 
-# Criando e treinando o modelo Prophet
-model = Prophet(yearly_seasonality=True, weekly_seasonality=False, daily_seasonality=False)
+# Criando e ajustando o modelo Prophet
+model = Prophet()
 model.fit(train_df)
 
-# Fazendo previsões para o ano de 2023
-future = test_df[['ds']]
+# Fazendo previsões para o período do dataset de teste
+future = test_df[['ds']]  # Usando as datas do conjunto de teste para previsão
 forecast = model.predict(future)
 
-# Extraindo as previsões
-y_pred = forecast['yhat']
-
 # Calculando o erro quadrático médio
-mse = mean_squared_error(test_df['y'], y_pred)
+mse = mean_squared_error(test_df['y'], forecast['yhat'])
 print(f'Mean Squared Error: {mse}')
 
-# Plotando os resultados
+# Visualizando os resultados
 plt.figure(figsize=(10, 6))
-plt.plot(test_df['ds'], test_df['y'], label='Valores Reais 2023', marker='o')
-plt.plot(test_df['ds'], y_pred, label='Previsões 2023', marker='x')
-plt.title('Previsão de Gastos para 2023 - Prophet')
+plt.plot(test_df['ds'], test_df['y'], label='Valores Reais', marker='o')
+plt.plot(forecast['ds'], forecast['yhat'], label='Previsões', marker='x')
+plt.title('Previsão de Gastos - Prophet')
 plt.xlabel('Data')
 plt.ylabel('Valor')
 plt.legend()

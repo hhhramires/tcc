@@ -1,9 +1,10 @@
+import re
+
+import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
-import re
+
 
 def extract_years(filename: str):
     # Usar expressão regular para encontrar todos os números no nome do arquivo
@@ -12,9 +13,10 @@ def extract_years(filename: str):
     # Converter para inteiros e retornar como uma lista de números
     return [int(year) for year in years]
 
+
 modelo = 'Modelo de Regressão Regularizados - ElasticNet'
-arquivo_treino = 'test_2024.csv'
-arquivo_teste = 'test_2024.csv'
+arquivo_treino = 'train_2021_2022.csv'
+arquivo_teste = 'test_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')

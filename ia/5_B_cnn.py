@@ -1,11 +1,12 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv1D, Dense, Flatten
 import re
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.layers import Conv1D, Dense, Flatten
+from tensorflow.keras.models import Sequential
+
 
 def extract_years(filename: str):
     # Usar expressão regular para encontrar todos os números no nome do arquivo
@@ -14,9 +15,10 @@ def extract_years(filename: str):
     # Converter para inteiros e retornar como uma lista de números
     return [int(year) for year in years]
 
+
 modelo = 'Modelo de Redes Neurais - Redes Neurais Convolucionais (CNN)'
-arquivo_treino = 'test_2024.csv'
-arquivo_teste = 'test_2024.csv'
+arquivo_treino = 'train_2021_2022.csv'
+arquivo_teste = 'test_2023.csv'
 
 # Carregando os dados de treino e teste
 train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
