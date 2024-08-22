@@ -1,0 +1,49 @@
+O MSE mede a média dos quadrados dos erros ou desvios, ou seja, a diferença entre os valores previstos e os valores reais. Um valor menor indica que as previsões estão mais próximas dos valores reais, o que reflete um modelo mais preciso.
+Modelos de Regressão Linear
+    Regressão Linear 
+        2021-2022, 2023: Mean Squared Error -> 898.7548349325123
+        2022-2023, 2024: Mean Squared Error -> 898.7548349325123
+Modelos Baseados em Árvores de Decisão (sim)
+    Decision Tree Regressor​
+        2021-2022, 2023: Mean Squared Error -> 41197391759.71429
+        2022-2023, 2024: Mean Squared Error -> 18180138104.055557
+    Random Forest Regressor​
+        2021-2022, 2023: Mean Squared Error -> 17429225907.73469
+        2022-2023, 2024: Mean Squared Error -> 39117079028.46188
+    Gradient Boosting Regressor
+        2021-2022, 2023: Mean Squared Error -> 15696373035.919222
+        2022-2023, 2024: Mean Squared Error -> 35605722256.32103
+Modelos de Séries Temporais (nao)
+    ARIMA
+        2021-2022, 2023: Mean Squared Error -> 862.462824390685
+        2022-2023, 2024: Mean Squared Error -> 862.462824390685
+    SARIMA 
+        2021-2022, 2023: Mean Squared Error -> 934.8623611206488
+        2022-2023, 2024: Mean Squared Error -> 934.8623611206488
+    Prophet
+        2021-2022, 2023: Mean Squared Error -> 1163.856052058404
+        2022-2023, 2024: Mean Squared Error -> 1163.856052058404
+    LSTM
+        2021-2022, 2023: Mean Squared Error -> 801.7423016985206
+        2022-2023, 2024: Mean Squared Error -> 1105.0738463005828
+Modelos de Regressão Regularizados
+    Ridge Regression  
+	2021-2022, 2023: Mean Squared Error -> 859.5789646714444
+        2022-2023, 2024: Mean Squared Error -> 859.5789646714444
+    Lasso Regression
+	2021-2022, 2023: Mean Squared Error -> 
+        2022-2023, 2024: Mean Squared Error -> 
+    ElasticNet
+	2021-2022, 2023: Mean Squared Error -> 
+        2022-2023, 2024: Mean Squared Error -> 
+Modelos de Redes Neurais
+    MLP Regressor 
+	2021-2022, 2023: Mean Squared Error -> 
+        2022-2023, 2024: Mean Squared Error -> 
+    Redes Neurais Convolucionais (CNN)
+	2021-2022, 2023: Mean Squared Error -> 
+        2022-2023, 2024: Mean Squared Error -> 
+Modelos Ensemble
+    Stacking Regressor
+        2021-2022, 2023: Mean Squared Error -> 18408072992.396515
+        2022-2023, 2024: Mean Squared Error -> 33719394301.56029
