@@ -26,9 +26,9 @@ y_val = test_df['value']
 
 # Parametros para o modelo Random Forest Regressor com GridSearch
 param_grid = {
-    'n_estimators': [100, 200, 300, 400],
-    'max_depth': [3, 4, 5],
-    'min_samples_split': [2, 5, 10],
+    'n_estimators': [100, 200],
+    'max_depth': [3, 4],
+    'min_samples_split': [5, 10],
     'min_samples_leaf': [1, 3, 5]}
 
 # Configurando o GridSearchCV com RandomForestRegressor
@@ -70,8 +70,8 @@ x_labels = [f"{week}-{month}" for week, month in zip(X_val['week_of_month'], X_v
 # Plotando os resultados
 plt.figure(figsize=(15, 7))
 plt.title('Entradas de Dinheiro', fontsize=16)
-plt.plot(x_labels, y_val, marker='o', label='Real', markersize=8, linewidth=2)
-plt.plot(x_labels, y_pred, marker='o', label='Predito', markersize=8, linewidth=2)
+plt.plot(x_labels, y_val, marker='o', label='Real', markersize=6, linewidth=2)
+plt.plot(x_labels, y_pred, marker='o', label='Predito', markersize=6, linewidth=2)
 plt.xlabel('Semana - Mês', fontsize=14)  # Legenda do eixo X com fonte maior
 plt.ylabel('Valor em Dinheiro', fontsize=14)  # Legenda do eixo Y com fonte maior
 plt.legend(fontsize=14)  # Aumenta o tamanho da fonte da legenda
@@ -79,5 +79,5 @@ plt.gca().yaxis.set_major_formatter(
     mtick.FuncFormatter(money_formatter))  # Aplicando o formatador de dinheiro ao eixo Y
 plt.grid(True)
 plt.yticks(fontsize=14)
-plt.xticks(rotation=45, fontsize=14)  # Rotaciona os rótulos do eixo X e ajusta o tamanho da fonte
+plt.xticks(rotation=90, fontsize=10)  # Rotaciona os rótulos do eixo X e ajusta o tamanho da fonte
 plt.show()
