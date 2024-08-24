@@ -28,7 +28,7 @@ y_val = validation_df['value']
 param_grid = {
     'hidden_layer_sizes': [(50,), (100,), (100, 50), (100, 100, 50)],
     'learning_rate_init': [0.001, 0.01, 0.1],
-    'max_iter': [500, 1000, 1500]
+    'max_iter': [2000, 3000]
 }
 
 # Configurando o GridSearchCV com MLP Regressor
