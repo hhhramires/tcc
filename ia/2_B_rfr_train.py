@@ -5,6 +5,12 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
 
+
+# Função para formatar os valores como dinheiro
+def money_formatter(x, pos):
+    return f'R${x:,.2f}'  # Formato brasileiro, ajustando para R$ e duas casas decimais
+
+
 arquivo_treino = '2021_2022.csv'
 arquivo_validation = '2023.csv'
 
@@ -59,12 +65,12 @@ best_params = grid_search.best_params_
 print(f'Best hyperparameters: {best_params}')
 
 # Criando rótulos personalizados para o eixo X no formato 'week_of_month-month'
-x_labels = [f"{week}-{month}" for week, month in zip(X_test['week_of_month'], X_test['month'])]
+x_labels = [f"{week}-{month}" for week, month in zip(X_val['week_of_month'], X_val['month'])]
 
 # Plotando os resultados
 plt.figure(figsize=(15, 7))
 plt.title('Entradas de Dinheiro', fontsize=16)
-plt.plot(x_labels, y_test, marker='o', label='Real', markersize=8, linewidth=2)
+plt.plot(x_labels, y_val, marker='o', label='Real', markersize=8, linewidth=2)
 plt.plot(x_labels, y_pred, marker='o', label='Predito', markersize=8, linewidth=2)
 plt.xlabel('Semana - Mês', fontsize=14)  # Legenda do eixo X com fonte maior
 plt.ylabel('Valor em Dinheiro', fontsize=14)  # Legenda do eixo Y com fonte maior
