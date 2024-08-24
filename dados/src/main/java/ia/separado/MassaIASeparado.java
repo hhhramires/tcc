@@ -1,8 +1,8 @@
 package ia.separado;
 
-import ia.Linha;
 import ia.CalculaSemanaMes;
 import ia.File;
+import ia.Linha;
 import ia.SemanaMes;
 
 import java.io.BufferedWriter;
@@ -17,29 +17,44 @@ public class MassaIASeparado {
         List<Linha> linhas = File.lerArquivo("gn");
         System.out.println("Total: " + linhas.size());
 
-        List<SemanaMesValor> semanaMesTreino = new ArrayList<>();
-        List<SemanaMesValor> semanaMesTeste = new ArrayList<>();
-        mes(linhas, 1, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 2, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 3, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 4, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 5, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 6, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 7, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 8, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 9, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 10, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 11, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 12, semanaMesTreino, semanaMesTeste);
+        List<SemanaMesValor> semanaMesTreinoEntrada = new ArrayList<>();
+        List<SemanaMesValor> semanaMesTreinoSaida = new ArrayList<>();
+        List<SemanaMesValor> semanaMesValidacaoEntrada = new ArrayList<>();
+        List<SemanaMesValor> semanaMesValidacaoSaida = new ArrayList<>();
+        List<SemanaMesValor> semanaMesTesteEntrada = new ArrayList<>();
+        List<SemanaMesValor> semanaMesTesteSaida = new ArrayList<>();
 
-        salvarLinha(semanaMesTreino, "train_2022_2023");
-        salvarLinha(semanaMesTeste, "test_2024");
+        mes(linhas, 1, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 2, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 3, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 4, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 5, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 6, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 7, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 8, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 9, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 10, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 11, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 12, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
 
-//        salvarLinha(semanaMesTreino, "train_2021_2022");
-//        salvarLinha(semanaMesTeste, "test_2023");
+        salvarLinha(semanaMesTreinoEntrada, "entradas\\2021_2022");
+        salvarLinha(semanaMesTreinoSaida, "saidas\\2021_2022");
+
+        salvarLinha(semanaMesValidacaoEntrada, "entradas\\2023");
+        salvarLinha(semanaMesValidacaoSaida, "saidas\\2023");
+
+        salvarLinha(semanaMesTesteEntrada, "entradas\\2024");
+        salvarLinha(semanaMesTesteSaida, "saidas\\2024");
     }
 
-    public static void mes(List<Linha> linhas, int mes, List<SemanaMesValor> semanaMesTreino, List<SemanaMesValor> semanaMesTeste) {
+    public static void mes(List<Linha> linhas, int mes,
+                           List<SemanaMesValor> semanaMesTreinoEntrada,
+                           List<SemanaMesValor> semanaMesTreinoSaida,
+                           List<SemanaMesValor> semanaMesValidacaoEntrada,
+                           List<SemanaMesValor> semanaMesValidacaoSaida,
+                           List<SemanaMesValor> semanaMesTesteEntrada,
+                           List<SemanaMesValor> semanaMesTesteSaida
+    ) {
         String mesString = String.valueOf(mes);
         if (mes < 10) {
             mesString = "0" + mes;
@@ -72,32 +87,34 @@ public class MassaIASeparado {
 
 
         for (int i = 0; i < 6; i++) {
-//            if (i < semanaMesEntrada2021.size()) {
-//                semanaMesTreino.add(
-//                        SemanaMesValor.builder()
-//                                .semana((i + 1))
-//                                .mes(mesString)
-//                                .valor(semanaMesEntrada2021.get(i).getValor())
-//                                .build());
-//            }
+            if (i < semanaMesEntrada2021.size()) {
+                semanaMesTreinoEntrada.add(
+                        SemanaMesValor.builder()
+                                .semana((i + 1))
+                                .mes(mesString)
+                                .valor(semanaMesEntrada2021.get(i).getValor())
+                                .build());
+            }
             if (i < semanaMesEntrada2022.size()) {
-                semanaMesTreino.add(
+                semanaMesTreinoEntrada.add(
                         SemanaMesValor.builder()
                                 .semana((i + 1))
                                 .mes(mesString)
                                 .valor(semanaMesEntrada2022.get(i).getValor())
                                 .build());
             }
+
             if (i < semanaMesEntrada2023.size()) {
-                semanaMesTreino.add(
+                semanaMesValidacaoEntrada.add(
                         SemanaMesValor.builder()
                                 .semana((i + 1))
                                 .mes(mesString)
                                 .valor(semanaMesEntrada2023.get(i).getValor())
                                 .build());
             }
+
             if (i < semanaMesEntrada2024.size()) {
-                semanaMesTeste.add(
+                semanaMesTesteEntrada.add(
                         SemanaMesValor.builder()
                                 .semana((i + 1))
                                 .mes(mesString)
@@ -110,30 +127,56 @@ public class MassaIASeparado {
         List<SemanaMes> semanaMesSaida2021 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2021);
         List<SemanaMes> semanaMesSaida2022 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2022);
         List<SemanaMes> semanaMesSaida2023 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2023);
+        List<SemanaMes> semanaMesSaida2024 = CalculaSemanaMes.calculateSaidaDeDinheiroPorSemanaMes(l2024);
 
         for (int i = 0; i < 6; i++) {
             if (i < semanaMesSaida2021.size()) {
-
+                semanaMesTreinoSaida.add(
+                        SemanaMesValor.builder()
+                                .semana((i + 1))
+                                .mes(mesString)
+                                .valor(semanaMesSaida2021.get(i).getValor())
+                                .build());
             }
-            if (i < semanaMesSaida2022.size()) {
 
+            if (i < semanaMesSaida2022.size()) {
+                semanaMesTreinoSaida.add(
+                        SemanaMesValor.builder()
+                                .semana((i + 1))
+                                .mes(mesString)
+                                .valor(semanaMesSaida2022.get(i).getValor())
+                                .build());
             }
 
             if (i < semanaMesSaida2023.size()) {
+                semanaMesValidacaoSaida.add(
+                        SemanaMesValor.builder()
+                                .semana((i + 1))
+                                .mes(mesString)
+                                .valor(semanaMesSaida2023.get(i).getValor())
+                                .build());
+            }
 
+            if (i < semanaMesSaida2024.size()) {
+                semanaMesTesteSaida.add(
+                        SemanaMesValor.builder()
+                                .semana((i + 1))
+                                .mes(mesString)
+                                .valor(semanaMesSaida2024.get(i).getValor())
+                                .build());
             }
         }
     }
 
     public static void salvarLinha(List<SemanaMesValor> linhas, String fileName) {
-        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\tcc\\ia\\dataset\\separado\\" + fileName + ".csv";
+        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\tcc\\ia\\dataset\\" + fileName + ".csv";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("week_of_month;month;value");
+            writer.write("week_of_month,month,value");
             writer.newLine();
 
             for (SemanaMesValor movimento_diario : linhas) {
-                writer.write(movimento_diario.getSemana() + ";" + movimento_diario.getMes() + ";" + movimento_diario.getValor().toBigInteger());
+                writer.write(movimento_diario.getSemana() + "," + movimento_diario.getMes() + "," + movimento_diario.getValor().toBigInteger());
                 writer.newLine();
             }
         } catch (IOException e) {
