@@ -79,5 +79,5 @@ plt.gca().yaxis.set_major_formatter(
     mtick.FuncFormatter(money_formatter))  # Aplicando o formatador de dinheiro ao eixo Y
 plt.grid(True)
 plt.yticks(fontsize=14)
-plt.xticks(rotation=90, fontsize=10)  # Rotaciona os rótulos do eixo X e ajusta o tamanho da fonte
+plt.xticks(rotation=90, fontsize=12)  # Rotaciona os rótulos do eixo X e ajusta o tamanho da fonte
 plt.show()
