@@ -3,7 +3,6 @@ import matplotlib.ticker as mtick
 import pandas as pd
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import GridSearchCV
 
 
 # Função para formatar os valores como dinheiro
@@ -22,47 +21,24 @@ test_df = pd.read_csv('dataset/entradas/' + arquivo_teste, sep=',')
 X_train = train_df[['week_of_month', 'month']]
 y_train = train_df['value']
 X_test = test_df[['week_of_month', 'month']]
-y_test= test_df['value']
+y_test = test_df['value']
 
-#{'learning_rate': 0.01, 'max_depth': 3, 'min_samples_leaf': 3, 'min_samples_split': 10, 'n_estimators': 200, 'subsample': 0.8}
-# Definindo os parâmetros para a busca
-param_grid = {
-    'n_estimators': [100, 200, 300, 400],
-    'learning_rate': [0.01, 0.05, 0.1, 0.2],
-    'max_depth': [3, 4, 5],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 3, 5],
-    'subsample': [0.6, 0.8, 1.0]}
+# Definindo os melhores parâmetros diretamente
+best_params = {'learning_rate': 0.01, 'max_depth': 3, 'min_samples_leaf': 3,
+               'min_samples_split': 10, 'n_estimators': 200, 'subsample': 0.8}
 
-# Usando GridSearchCV para encontrar os melhores parâmetros
-grid_search = GridSearchCV(
-    estimator=GradientBoostingRegressor(random_state=42),
-    param_grid=param_grid,
-    scoring='neg_mean_squared_error',
-    cv=5,
-    n_jobs=-1,
-    verbose=1)
+# Criando uma nova instância do GradientBoostingRegressor com os melhores parâmetros
+best_model = GradientBoostingRegressor(**best_params, random_state=42)
 
-# Treinando o modelo
-grid_search.fit(X_train, y_train)
+# Treinando o modelo diretamente com os melhores parâmetros
+best_model.fit(X_train, y_train)
 
-# Obtendo o melhor modelo
-best_model = grid_search.best_estimator_
-
-# Fazendo previsões para o ano de 2023
+# Fazendo previsões para o ano de 2024 (ou conforme seu arquivo de teste)
 y_pred = best_model.predict(X_test)
 
 # Calculando o erro quadrático médio
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
-cv_results = grid_search.cv_results_
-
-# for mean_score, params in zip(cv_results['mean_test_score'], cv_results['params']):
-#    print(f'Mean Score: {mean_score}, Params: {params}')
-
-# Após o grid_search.fit(X_train, y_train)
-best_params = grid_search.best_params_
-print(f'Best hyperparameters: {best_params}')
 
 # Criando rótulos personalizados para o eixo X no formato 'week_of_month-month'
 x_labels = [f"{week}-{month}" for week, month in zip(X_test['week_of_month'], X_test['month'])]
