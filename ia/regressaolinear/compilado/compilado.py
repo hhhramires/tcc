@@ -58,16 +58,16 @@ x_labels = [f"{week}-{month}" for week, month in zip(X_entradas_val['week_of_mon
 
 # Combinando os arrays em um DataFrame
 df = pd.DataFrame({
-    'data': x_labels,
-    'Coluna1': y_entradas_pred,
-    'Coluna2': y_entradas_pred
+    'semana-mes': x_labels,
+    'entradas': y_entradas_pred,
+    'saidas': y_saidas_pred
 })
 
-print(df.head())
+# Adicionando a coluna 'resultado' que é a diferença entre 'y_entradas_pred' e 'y_saidas_pred'
+df['resultado'] = df['entradas'] - df['saidas']
 
 # Salvando o DataFrame em um arquivo CSV
 df.to_csv('dados.csv', index=False)
-print("Dados salvos em 'dados.csv'.")
 
 # Plotando os resultados
 plt.figure(figsize=(15, 9))
@@ -83,7 +83,3 @@ plt.grid(True)
 plt.yticks(fontsize=14)
 plt.xticks(rotation=90, fontsize=14)
 plt.show()
-
-
-
-
