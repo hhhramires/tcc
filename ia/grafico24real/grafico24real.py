@@ -5,7 +5,6 @@ import pandas as pd
 
 entradas_df = pd.read_csv('../dataset/entradas/2024.csv', sep=',')
 saidas_df = pd.read_csv('../dataset/saidas/2024.csv', sep=',')
-emtradas_df = pd.read_csv('../regressaolinear/compilado/dados.csv', sep=',')
 
 # Renomeando as colunas para 'entradas' e 'saidas'
 entradas_df.rename(columns={'value': 'entradas'}, inplace=True)

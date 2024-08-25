@@ -58,7 +58,7 @@ x_labels = [f"{week}-{month}" for week, month in zip(X_entradas_val['week_of_mon
 
 # Combinando os arrays em um DataFrame
 df = pd.DataFrame({
-    'semana-mes': x_labels,
+    'semana_mes': x_labels,
     'entradas': y_entradas_pred,
     'saidas': y_saidas_pred
 })
