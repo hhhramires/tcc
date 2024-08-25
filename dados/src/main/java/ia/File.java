@@ -40,10 +40,10 @@ public class File {
                                 .ua(linha[0].split("\\.")[2])
                                 .id_terminal(linha[0].split("\\.")[3])
                                 .data(LocalDate.parse(linha[1]))
-                                .saldo_inicial(new BigDecimal(linha[2]))
-                                .saldo_final(new BigDecimal(linha[3]))
-                                .entrada_dinheiro(new BigDecimal(linha[4]))
-                                .saida_dinheiro(new BigDecimal(linha[5]))
+                                .saldoInicial(new BigDecimal(linha[2]))
+                                .saldoFinal(new BigDecimal(linha[3]))
+                                .entradaDinheiro(new BigDecimal(linha[4]))
+                                .saidaDinheiro(new BigDecimal(linha[5]))
                                 .suprimento(new BigDecimal(linha[6]))
                                 .recolhimento(new BigDecimal(linha[7]))
                                 .build());
@@ -63,14 +63,14 @@ public class File {
             for (Linha movimento_diario : linhas) {
                 String[] linha =
                         {
-                                (movimento_diario.sistema + '.' + movimento_diario.coop + '.' + movimento_diario.ua + '.' + movimento_diario.id_terminal),
-                                movimento_diario.data.toString(),
-                                movimento_diario.saldo_inicial.toString(),
-                                movimento_diario.saldo_final.toString(),
-                                movimento_diario.entrada_dinheiro.toString(),
-                                movimento_diario.saida_dinheiro.toString(),
-                                movimento_diario.suprimento.toString(),
-                                movimento_diario.recolhimento.toString(),
+                                (movimento_diario.getSistema() + '.' + movimento_diario.getCoop() + '.' + movimento_diario.getUa() + '.' + movimento_diario.getId_terminal()),
+                                movimento_diario.getData().toString(),
+                                movimento_diario.getSaldoInicial().toString(),
+                                movimento_diario.getSaldoFinal().toString(),
+                                movimento_diario.getEntradaDinheiro().toString(),
+                                movimento_diario.getSaidaDinheiro().toString(),
+                                movimento_diario.getSuprimento().toString(),
+                                movimento_diario.getRecolhimento().toString(),
                                 "",
                                 ""
                         };

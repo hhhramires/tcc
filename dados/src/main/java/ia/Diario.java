@@ -32,14 +32,14 @@ public class Diario {
             BigDecimal[] valoresSaida = saidas.getOrDefault(data, new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO});
 
             if (l.getData().getYear() == 2021) {
-                valoresEntrada[0] = valoresEntrada[0].add(l.getEntrada_dinheiro());
-                valoresSaida[0] = valoresSaida[0].add(l.getSaida_dinheiro());
+                valoresEntrada[0] = valoresEntrada[0].add(l.getEntradaDinheiro());
+                valoresSaida[0] = valoresSaida[0].add(l.getSaidaDinheiro());
             } else if (l.getData().getYear() == 2022) {
-                valoresEntrada[1] = valoresEntrada[1].add(l.getEntrada_dinheiro());
-                valoresSaida[1] = valoresSaida[1].add(l.getSaida_dinheiro());
+                valoresEntrada[1] = valoresEntrada[1].add(l.getEntradaDinheiro());
+                valoresSaida[1] = valoresSaida[1].add(l.getSaidaDinheiro());
             } else if (l.getData().getYear() == 2023) {
-                valoresEntrada[2] = valoresEntrada[2].add(l.getEntrada_dinheiro());
-                valoresSaida[2] = valoresSaida[2].add(l.getSaida_dinheiro());
+                valoresEntrada[2] = valoresEntrada[2].add(l.getEntradaDinheiro());
+                valoresSaida[2] = valoresSaida[2].add(l.getSaidaDinheiro());
             }
 
             entradas.put(data, valoresEntrada);

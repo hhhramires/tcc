@@ -18,7 +18,7 @@ public class CalculaSemanaMes {
                                 linha -> buscarSemanaDoMes(linha.getData()), // número da semana do mês
                                 Collectors.groupingBy(
                                         linha -> linha.getData().getMonthValue(), // mês
-                                        Collectors.reducing(BigDecimal.ZERO, Linha::getEntrada_dinheiro, BigDecimal::add) // soma dos valores
+                                        Collectors.reducing(BigDecimal.ZERO, Linha::getEntradaDinheiro, BigDecimal::add) // soma dos valores
                                 )
                         ));
 
@@ -37,7 +37,7 @@ public class CalculaSemanaMes {
                                 linha -> buscarSemanaDoMes(linha.getData()), // número da semana do mês
                                 Collectors.groupingBy(
                                         linha -> linha.getData().getMonthValue(), // mês
-                                        Collectors.reducing(BigDecimal.ZERO, Linha::getSaida_dinheiro, BigDecimal::add) // soma dos valores
+                                        Collectors.reducing(BigDecimal.ZERO, Linha::getSaidaDinheiro, BigDecimal::add) // soma dos valores
                                 )
                         ));
 

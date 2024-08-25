@@ -10,16 +10,16 @@ import java.time.LocalDate;
 @Builder
 public class Linha {
 
-    String sistema;
-    String coop;
-    String ua;
-    String id_terminal;
-    LocalDate data;
-    BigDecimal saldo_inicial;
-    BigDecimal saldo_final;
-    BigDecimal entrada_dinheiro;
-    BigDecimal saida_dinheiro;
-    BigDecimal suprimento;
-    BigDecimal recolhimento;
+    private String sistema;
+    private String coop;
+    private String ua;
+    private String id_terminal;
+    private LocalDate data;
+    private BigDecimal saldoInicial;
+    private BigDecimal saldoFinal;
+    private BigDecimal entradaDinheiro;
+    private BigDecimal saidaDinheiro;
+    private BigDecimal suprimento;
+    private BigDecimal recolhimento;
 
 }

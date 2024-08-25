@@ -15,31 +15,44 @@ public class MassaIADataValor {
         List<Linha> linhas = File.lerArquivo("gn");
         System.out.println("Total: " + linhas.size());
 
-        List<DataValorSaida> semanaMesTreino = new ArrayList<>();
-        List<DataValorSaida> semanaMesTeste = new ArrayList<>();
-        System.out.println("1");
-        mes(linhas, 1, semanaMesTreino, semanaMesTeste);
-        System.out.println("2");
-        mes(linhas, 2, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 3, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 4, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 5, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 6, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 7, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 8, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 9, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 10, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 11, semanaMesTreino, semanaMesTeste);
-        mes(linhas, 12, semanaMesTreino, semanaMesTeste);
+        List<DataValorSaida> semanaMesTreinoEntrada = new ArrayList<>();
+        List<DataValorSaida> semanaMesTreinoSaida = new ArrayList<>();
+        List<DataValorSaida> semanaMesValidacaoEntrada = new ArrayList<>();
+        List<DataValorSaida> semanaMesValidacaoSaida = new ArrayList<>();
+        List<DataValorSaida> semanaMesTesteEntrada = new ArrayList<>();
+        List<DataValorSaida> semanaMesTesteSaida = new ArrayList<>();
 
-        salvarLinha(semanaMesTreino, "train_data_valor_2021_2022");
-        salvarLinha(semanaMesTeste, "test_data_valor_2023");
+        mes(linhas, 1, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 2, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 3, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 4, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 5, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 6, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 7, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 8, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 9, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 10, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 11, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
+        mes(linhas, 12, semanaMesTreinoEntrada, semanaMesTreinoSaida, semanaMesValidacaoEntrada, semanaMesValidacaoSaida, semanaMesTesteEntrada, semanaMesTesteSaida);
 
-//        salvarLinha(semanaMesTreino, "train_2022_2023");
-//        salvarLinha(semanaMesTeste, "test_2024");
+        salvarLinha(semanaMesTreinoEntrada, "entradas\\2021_2022");
+        salvarLinha(semanaMesTreinoSaida, "saidas\\2021_2022");
+
+        salvarLinha(semanaMesValidacaoEntrada, "entradas\\2023");
+        salvarLinha(semanaMesValidacaoSaida, "saidas\\2023");
+
+        salvarLinha(semanaMesTesteEntrada, "entradas\\2024");
+        salvarLinha(semanaMesTesteSaida, "saidas\\2024");
     }
 
-    public static void mes(List<Linha> linhas, int mes, List<DataValorSaida> semanaMesTreino, List<DataValorSaida> semanaMesTeste) {
+    public static void mes(List<Linha> linhas, int mes,
+                           List<DataValorSaida> semanaMesTreinoEntrada,
+                           List<DataValorSaida> semanaMesTreinoSaida,
+                           List<DataValorSaida> semanaMesValidacaoEntrada,
+                           List<DataValorSaida> semanaMesValidacaoSaida,
+                           List<DataValorSaida> semanaMesTesteEntrada,
+                           List<DataValorSaida> semanaMesTesteSaida
+    ) {
         List<Linha> l2021 = linhas
                 .stream()
                 .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2021 && linha.getData().getMonthValue() == mes))
@@ -60,46 +73,91 @@ public class MassaIADataValor {
                 .filter(linha -> (linha.getCoop().equals("0704") && linha.getUa().equals("0008")) && (linha.getData().getYear() == 2024 && linha.getData().getMonthValue() == mes))
                 .collect(Collectors.toList());
 
-        System.out.println("for 21");
+        // Entradas
         for (Linha l : l2021) {
-            semanaMesTreino.add(
+            semanaMesTreinoEntrada.add(
                     DataValorSaida
                             .builder()
                             .data(l.getData())
-                            .valor(l.getEntrada_dinheiro())
+                            .valor(l.getEntradaDinheiro())
                             .build());
         }
 
-        System.out.println("for 22");
         for (Linha l : l2022) {
-            semanaMesTreino.add(
+            semanaMesTreinoEntrada.add(
                     DataValorSaida
                             .builder()
                             .data(l.getData())
-                            .valor(l.getEntrada_dinheiro())
+                            .valor(l.getEntradaDinheiro())
                             .build());
         }
 
         for (Linha l : l2023) {
-            semanaMesTeste.add(
+            semanaMesValidacaoEntrada.add(
                     DataValorSaida
                             .builder()
                             .data(l.getData())
-                            .valor(l.getEntrada_dinheiro())
+                            .valor(l.getEntradaDinheiro())
+                            .build());
+        }
+
+        for (Linha l : l2024) {
+            semanaMesTesteEntrada.add(
+                    DataValorSaida
+                            .builder()
+                            .data(l.getData())
+                            .valor(l.getEntradaDinheiro())
+                            .build());
+        }
+
+        // Saidas
+        for (Linha l : l2021) {
+            semanaMesTreinoSaida.add(
+                    DataValorSaida
+                            .builder()
+                            .data(l.getData())
+                            .valor(l.getSaidaDinheiro())
+                            .build());
+        }
+
+        for (Linha l : l2022) {
+            semanaMesTreinoSaida.add(
+                    DataValorSaida
+                            .builder()
+                            .data(l.getData())
+                            .valor(l.getSaidaDinheiro())
+                            .build());
+        }
+
+        for (Linha l : l2023) {
+            semanaMesValidacaoSaida.add(
+                    DataValorSaida
+                            .builder()
+                            .data(l.getData())
+                            .valor(l.getSaidaDinheiro())
+                            .build());
+        }
+
+        for (Linha l : l2024) {
+            semanaMesTesteSaida.add(
+                    DataValorSaida
+                            .builder()
+                            .data(l.getData())
+                            .valor(l.getSaidaDinheiro())
                             .build());
         }
 
     }
 
     public static void salvarLinha(List<DataValorSaida> linhas, String fileName) {
-        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\tcc\\ia\\dataset\\real\\" + fileName + ".csv";
+        fileName = "C:\\Users\\henrique_ramires\\OneDrive - Sicredi\\Desktop\\tcc\\ia\\dataset\\datavalor\\" + fileName + ".csv";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("date;value");
+            writer.write("date,value");
             writer.newLine();
 
             for (DataValorSaida movimento_diario : linhas) {
-                writer.write(movimento_diario.getData() + ";" + movimento_diario.getValor().toBigInteger());
+                writer.write(movimento_diario.getData() + "," + movimento_diario.getValor().toBigInteger());
                 writer.newLine();
             }
         } catch (IOException e) {
