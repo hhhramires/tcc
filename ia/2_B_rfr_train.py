@@ -26,10 +26,10 @@ y_val = test_df['value']
 
 # Parametros para o modelo Random Forest Regressor com GridSearch
 param_grid = {
-    'n_estimators': [100, 200],
+    'n_estimators': [200, 300],
     'max_depth': [3, 4],
     'min_samples_split': [5, 10],
-    'min_samples_leaf': [1, 3, 5]}
+    'min_samples_leaf': [2, 5]}
 
 # Configurando o GridSearchCV com RandomForestRegressor
 grid_search = GridSearchCV(

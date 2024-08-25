@@ -22,8 +22,8 @@ arquivo_teste = 'test_data_valor_2023.csv'
 # arquivo_teste = 'test_data_valor_2023.csv'
 
 # Carregando os dados de treino e teste
-train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=';')
-test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=';')
+train_df = pd.read_csv('dataset/real/' + arquivo_treino, sep=',')
+test_df = pd.read_csv('dataset/real/' + arquivo_teste, sep=',')
 
 # Convertendo a coluna 'date' para datetime e definindo como índice
 train_df['date'] = pd.to_datetime(train_df['date'])
